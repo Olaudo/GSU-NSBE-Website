@@ -1,392 +1,532 @@
-@font-face {
-  font-family: "Geist Sans";
-  src: url("https://assets.codepen.io/605876/GeistVF.ttf") format("truetype");
-}
-
-*,
-*:after,
-*:before {
-	box-sizing: border-box;
-}
-
-html {
-	scroll-snap-type: y mandatory;
-}
-
-body {
-	min-height: 100vh;
-	font-family:  "Geist Sans", "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue", Helvetica, Arial, sans-serif, system-ui;
-	font-weight: 80;
-	background: black;
-	color: hsl(0 0% 90%);
-	overflow-x: hidden;
-}
-
-p {
-	max-width: 40ch;
-}
-
-section:nth-of-type(1) {
-	scroll-snap-align: center;
-	height: 100vh;
-}
-
-section:nth-of-type(2) {
-	scroll-snap-align: start;
-}
-
-article {
-	min-height: 100vh;
-}
-:is(h1, h2) {
-	font-weight: 70;
-	font-size: clamp(2.5rem, 3.35vw + 1rem, 8rem);
-	letter-spacing: -0.075ch;
-	margin: 0;
-}
-
-h1 {
-	color: hsl(0 0% 90%);
-}
-
-:is(section, article) {
-	position: relative;
-}
-
-nav {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	padding: 1rem;
-	z-index: 999;
-	display: flex;
-	justify-content: space-between;
-}
-a:first-of-type {
-	width: 48px;
-	aspect-ratio: 1;
-	display: grid;
-	place-items: center;
-	color: white;
-}
-a:last-of-type {
-	background: hsl(173 100% 51%);
-	color: black;
-	padding: 1rem 2rem;
-	border-radius: 22px;
-	text-decoration: none;
-	font-weight: 120;
-	transition: background 0.2s;
-}
-a:last-of-type:is(:hover, :focus-visible) {
-	background: hsl(173 100% 40%);
-}
-
-.content {
-	margin: 0 auto;
-	width: 900px;
-	max-width: 100%;
-	height: 100%;
-	z-index: 2;
-	position: absolute;
-	inset: 0;
-  padding: 1rem;
-}
-
-.fixed img {
-	height: 100%;
-	width: 150%;
-	object-fit: cover;
-	z-index: -1;
-	position: absolute;
-	inset: 0;
-	left: 50%;
-	translate: -50% 0;
-	filter: brightness(0.5);
-}
-
-section:first-of-type img {
-	left: 50%;
-	translate: -50% 0;
-}
-
-section:first-of-type {
-	padding: 2rem 1rem;
-	display: grid;
-	align-content: end;
-	justify-content: start;
-}
-
-section:first-of-type .fixed {
-	z-index: 5;
-}
-
-section:first-of-type .fixed .content {
-	margin: 0 auto;
-	width: 900px;
-	max-width: 100%;
-	display: grid;
-	align-content: center;
-	justify-content: start;
-	padding: 6rem 2rem;
-	height: 100%;
-}
-
-section:first-of-type {
-	background: black;
-}
-
-section:first-of-type p {
-	font-size: clamp(1rem, 0.2vw + 1rem, 2rem);
-}
-
-section:nth-of-type(2) article:first-of-type .fixed {
-	z-index: 2;
-}
-
-section:nth-of-type(2) .content {
-	display: grid;
-	padding: 4rem 1rem;
-	align-content: center;
-}
-
-section:nth-of-type(2) article:first-of-type .content {
-	align-content: end;
-}
-
-section:nth-of-type(2) article:first-of-type .fixed::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: hsl(0 0% 0% / 0.25);
-}
-
-section:nth-of-type(2) article:first-of-type h2 {
-	padding: 1rem 0;
-}
-
-section:nth-of-type(2) article:nth-of-type(2) .fixed {
-	background: black;
-	z-index: 2;
-}
-
-section:nth-of-type(2) article:nth-of-type(3) .content {
-	align-content: start;
-}
-
-section:nth-of-type(2) article:nth-of-type(3) .fixed {
-	z-index: 2;
-}
-
-section:nth-of-type(2) article:nth-of-type(3) img {
-	filter: saturate(0.5) brightness(0.5);
-}
-
-.text-blocks {
-	max-width: 100%;
-	width: 40ch;
-	justify-self: end;
-	display: grid;
-	place-items: center;
-	gap: 2rem 0;
-}
-
-/* Text block styling */
-.chat-container {
-	height: 100vh;
-	width: 100%;
-	position: sticky;
-	top: 0;
-	display: grid;
-	place-items: center;
-}
-.text-blocks p {
-	display: inline-block;
-	border-radius: 6px;
-	margin: 0;
-	font-size: clamp(1.5rem, 0.5vw + 1rem, 4rem);
-	font-weight: 120;
-}
-.text-blocks p:nth-of-type(even) {
-	justify-self: end;
-	text-align: right;
-	color: hsl(173 100% 51%);
-}
-.text-blocks p:nth-of-type(odd) {
-	justify-self: start;
-}
-
-.filler {
-	display: none;
-}
-
-
-@supports (animation-timeline: scroll()) {
-  @media(prefers-reduced-motion: no-preference) {
-    article {
-      view-timeline: --article;
+:root {
+    /* ========= COLORS ========= */
+        --Georgia-Southern-Blue: hsl(217, 100%, 30%); /* Primary blue */
+        --Gold: hsl(42, 70%, 50%); /* Gold accent */
+        --White: hsl(0, 0%, 100%); /* White for background and text */
+        --Dark-Blue: hsl(217, 80%, 20%); /* Darker blue for contrast or text */
+        --Light-Gray: hsl(0, 0%, 95%); /* Light gray for background or subtle elements */
+        --carcoal_10: hsla(0, 0%, 0%, 0.1);  
+        --carcoal_15: hsla(0, 0%, 0%, 0.15);
+        --carcoal_20: hsla(0, 0%, 0%, 0.2);
+    
+    /*======= typography ========*/
+    
+       --ff-spartan: 'League Spartan', sans-serif;
+       --ff-montserrat: 'Montserrat', sans-serif; 
+       --ff-inter: 'Inter', sans-serif;
+    
+       --fs-1: 3.6rem;
+       --fs-2: 2.4rem;
+       --fs-3: 2rem;
+       --fs-4: 1.8rem;
+       --fs-5: 1.7rem;
+     
+       --fw-600: 600;
+       --fw-500: 500;
+     
+    /*======== spacing =========*/
+     
+       --section-padding: 35px;
+     
+    /*======= shadow =======*/
+     
+       --shadow-1: 0 1px 2px hsla(0, 0%, 0%, 0.2);
+       --shadow-2: 0 10px 15px -5px var(--carcoal_20);
+       --shadow-3: 0 10px 25px -3px var(--carcoal_20);
+       --shadow-4: 0 0 3px var(--carcoal_15);
+       --shadow-5: 0 20px 25px -5px var(--carcoal_10),
+                   0 10px 10px -5px var(--carcoal_10);
+     
+    /*======== border radius ========*/
+     
+       --radius-16: 16px;
+       --radius-12: 12px;
+       --radius-6: 6px;
+       --radius-4: 4px;
+     
+    /*======== transition =========*/
+     
+       --transition: 0.25s ease;
+       --cubic-out: cubic-bezier(0.33, 0.85, 0.4, 0.96);
+    }
+    
+    
+    /*======== Reset Styles =========*/
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    /*======== Base Styles =========*/
+    
+    html {
+        font-family: var(--ff-inter);
+        font-size: 62.5%;
+        color: var(--Dark-Blue);
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        font-size: var(--fs-5);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+    
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    li { 
+        list-style: none;
+    }
+    
+    /* ============ General Button Enhancements ============*/
+    .btn {
+        background-color: var(--Dark-Blue);
+        color: var(--White);
+        font-weight: var(--fw-500);
+        max-width: max-content;
+        padding: 12px 32px;
+        transition: var(--transition);
+        border: 4px solid transparent; 
+        text-align: center;
+        font-size: var(--fs-5);
+        border-radius: 50px;
+        cursor: pointer;
+    }
+    
+    .btn:hover {
+        background-color: var(--Gold);
+        color: var(--White);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-3);
+    }
+    
+    .btn:focus-visible {
+        outline: 3px solid var(--Gold);
+        transform: scale(1.05);
+    }
+    
+    /* ============ Navigation Styles  ============*/
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+    
+    .navbar-list {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+    
+    .nav-item {
+        display: inline-block;
+    }
+    
+    .navbar-link {
+        color: var(--Dark-Blue);
+        font-size: var(--fs-5);
+        font-weight: var(--fw-500);
+        padding: 10px 15px;
+        transition: var(--transition);
+    }
+    
+    .navbar-link.active,
+    .navbar-link:hover {
+        color: var(--Georgia-Southern-Blue);
+    }
+    
+    .header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px var(--container-padding);
+    }
+    
+    
+    /*======== Common Element Styles =========*/
+    a,
+    img,
+    span,
+    label,
+    input,
+    select,
+    button,
+    ion-icon {
+        display: block;
+    }
+    
+    img {
+        height: auto;
+        max-width: 100%;
+    }
+    
+    input,
+    select,
+    button {
+        background: none;
+        border: none;
+        font: inherit;
+    }
+    
+    input,
+    select {
+        width: 100%;
+    }
+    
+    button {
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    
+    ion-icon { pointer-events: none; }
+    
+    address { font-style: normal; }
+    
+    /* ============ Layout Classes ============*/
+    .container {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+    }
+    
+    /* ============ Button Enhancements (General) ============*/   
+    .about-btn,
+    .btn-join, 
+    .btn-donate, 
+    .btn-about {
+        margin: 20px auto;
+        display: inline-block;
+        font-family: var(--ff-montserrat);
+    }
+    
+    /* ============ Donate Button ============*/
+    .btn-donate {
+        padding: 12px 32px;
+        border-radius: 50px;
+        font-size: var(--fs-4);
+    }
+    
+    .btn-donate:hover {
+        background-color: var(--Georgia-Southern-Blue);
+        transform: scale(1.1);
+        box-shadow: var(--shadow-1);
+    }
+    
+    /* ============ Logo Styles ============*/
+    .logo {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .logo img {
+        width: 250px;
+        height: auto;
+        display: block;
+        max-width: 100%;
+    }
+    
+    /* ============ Join Button (Learn More ============*/
+    .btn-join {
+        padding: 12px 28px;
+        border-radius: 50px;
+        background-color: var(--Gold);
+        font-weight: var(--fw-600);
+        transition: var(--transition);
+    }
+    
+    .btn-join:hover {
+        background-color: var(--Dark-Blue);
+        color: var(--Gold);
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-2);
+    }   
+    
+    /* ============ Menu Icon Styles ============*/
+    .nav-toggle-btn {
+        display: none;
+        padding: 8px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .nav-toggle-btn ion-icon {
+        font-size: 2.4rem;
+        color: var(--Dark-Blue);
+        --ionicon-stroke-width: 40px;
+    }
+    
+    .nav-toggle-btn .close-icon {
+        display: none;
+    }
+    
+    .nav-toggle-btn.active .close-icon {
+        display: none;
+    }
+    
+    .nav-toggle-btn.active .menu-icon {
+        display: none;
+    }
+    
+    .nav-toggle-btn.active .close-icon {
+        display: block;
+    }
+    
+    /* ============ Title Section Styles ============*/
+    .title-section {
+        padding: var(--section-padding) 0;
+        background-color: var(--Light-Gray);
+        text-align: center;
+    }
+    
+    .title {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+    
+    .title h1 {
+        font-size: var(--fs-1);
+        font-weight: var(--fw-600);
+        color: var(--Georgia-Southern-Blue);
+        margin-bottom: 15px;
+        line-height: 1.2;
+    }
+    
+    .title h2 {
+        font-size: var(--fs-3);
+        font-weight: var(--fw-500);
+        color: var(--Dark-Blue);
+        line-height: 1.4;
+    }
+    
+    /* ============ Main Content Section ============ */
+    .about {
+        padding: 80px 0;
+        background-color: var(--White);
+    }
+    
+    .about-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    /* ====== (Main Content) Title Styling ====== */
+    .about-content .h1.section-title {
+        font-size: 20px;
+        color: var(--Gold);
+        margin-bottom: 10px;
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    .about-content .h2.section-title {
+        font-size: 36px;
+        color: var(--Gold);
+        margin-bottom: 30px;
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    /* ====== (Main Content) Paragraph Styling ====== */
+    .about-content p { 
+        margin-bottom: 20px;
+        line-height: 1.6;
+        color: var(--Gold);
+        font-family: 'Open Sans', sans-serif;
+    }
+    
+    /* ====== (Main Content) More About Button ====== */
+    .btn-about {
+        padding: 12px 28px;
+        border-radius: 50px;
+        background-color: var(--Georgia-Southern-Blue);
+        color: var(--White);
+        transition: var(--transition);
+    }
+    
+    .btn-about:hover {
+        background-color: var(--Gold);
+        color: var(--Dark-Blue);
+        box-shadow: var(--shadow-5);
+        transform: scale(1.05);
     }
 
-    .fixed {
-      position: fixed;
-      inset: 0;
-    }
-    .static {
-      position: absolute;
-      inset: 0;
-      z-index: 6;
-    }
-    .filler {
-      display: block;
-      width: 100%;
-      position: absolute;
-      bottom: 30vh;
-      padding: 1rem;
-    }
+    /* ============ Executive Board Text ============ */
 
-    .text-blocks p {
-      animation: slide-in, fade-in;
-      animation-fill-mode: both;
-      animation-timing-function: linear;
-      animation-timeline: --article;
-    }
-
-    .text-blocks p:nth-of-type(1) { animation-range: entry-crossing 50% entry-crossing 55%; }
-    .text-blocks p:nth-of-type(2) { animation-range: entry-crossing 55% entry-crossing 60%; }
-    .text-blocks p:nth-of-type(3) { animation-range: entry-crossing 60% entry-crossing 65%; }
-    .text-blocks p:nth-of-type(4) { animation-range: entry-crossing 65% entry-crossing 70%; }
-    .text-blocks p:nth-of-type(5) { animation-range: entry-crossing 70% entry-crossing 75%; }
-
-    section:nth-of-type(2) article:last-of-type {
-      z-index: 5;
-    }
-    section:nth-of-type(2) article:nth-of-type(3) {
-      height: 400vh;
-    }
-    section:nth-of-type(2) article:nth-of-type(3) h2 {
-      margin-top: 80vh;
-    }
-    section:nth-of-type(2) article:last-of-type .fixed {
-      clip-path: ellipse(220% 200% at 50% 300%);
-      animation: unclip both linear;
-      animation-timeline: --article;
-      animation-range: entry 20% entry 80%;
-    }
-    .filler h2 {
-      animation: fade-away, fade-out;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: --article;
-      animation-range: exit 40% exit 75%, exit 70% exit 90%;
-    }
-    .loud-wrap {
-      clip-path: inset(0 0 0 0);
-      animation: unmask both linear;
-      animation-timeline: --article;
-      animation-range: entry 20% entry 80%;
-      mask: linear-gradient(white 50%, transparent) 0 100% / 100% 200% no-repeat;
-    }
-    .text-wrap {
-      position: sticky;
-      bottom: 4rem;
-      transform-origin: 50% 0;
-      animation: fade-away both linear, fade-out both linear;
-      animation-timeline: --article;
-      animation-range: exit 40% exit 75%, exit 70% exit 100%;
-    }
-    .text-blocks {
-      animation: fade-out both linear;
-      animation-timeline: --article;
-      animation-range: entry-crossing 75% entry-crossing 100%;
-    }
-    section:nth-of-type(2) article:nth-of-type(3) .fixed {
-      animation: fade-in both linear, fade-out both linear;
-      animation-timeline: --article, --article;
-      animation-range: entry 45% exit-crossing 0%, exit 0% exit 15%;
-    }
-
-    section:nth-of-type(2) article:nth-of-type(2) .fixed {
-      animation: fade-in;
-      animation-fill-mode: both;
-      animation-timing-function: linear;
-      animation-timeline: --article;
-      animation-range: entry 60% exit 30%;
-    }
-    section:nth-of-type(2) article:nth-of-type(2) h2 {
-      animation: slide-in, fade-in, fade-away, fade-out;
-      animation-fill-mode: both;
-      animation-timing-function: linear;
-      animation-timeline: view(), view(), --article, --article;
-      animation-range: entry 100% cover 25%, entry 100% cover 35%, exit 20% exit 40%, exit 40% exit 50%;
-    }
-    section:nth-of-type(2) article:first-of-type h2 {
-      animation: slide-up both linear;
-      animation-timeline: --article;
-      animation-range: entry 20% entry 80%;
-    }
-    section:nth-of-type(2) article:first-of-type img {
-      animation: scale-down both linear;
-      animation-timeline: --article;
-      animation-range: entry;
-    }
-    section:nth-of-type(2) article:first-of-type .fixed {
-      clip-path: ellipse(220% 200% at 50% 300%);
-      animation: unclip both linear;
-      animation-timeline: --article;
-      animation-range: entry 0 entry 100%;
-    }
-    section:first-of-type {
-      view-timeline: --section;
-    }
-    section:first-of-type .fixed {
-      animation: scale-and-move both linear, fade-out both linear;
-      animation-timeline: --section;
-      animation-range: exit 0% exit 50%, exit 0% exit 25%;
-      transform-origin: 50% 0;
-    }
-    /* Keyframes collection	*/
-    @keyframes slide-in {
-      0% {
-        translate: 0 100%;
+    .section-title-container {
+        text-align: center; 
+        width: 100%;
+        margin-bottom: 0px;
+        padding: 20px 0;
       }
+      
+      .section-title {
+        font-size: 4rem; 
+        color: var(--Gold); 
+        margin: 0; 
+        font-weight: bold;
     }
 
-    @keyframes fade-in {
-      0% {
-        opacity: 0;
-      }
+    /* ============ Executive Board Layout ============ */
+    
+    .executive-board {
+        padding: 40px 0;
     }
-    @keyframes slide-up {
-      0% {
-        translate: 0 100%;
-      }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
     }
-    @keyframes fade-away {
-      to {
-        filter: blur(4rem);
-      }
+
+    .eboard-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
     }
-    @keyframes unmask {
-      to {
-        mask-position: 0 0;
-      }
+
+    .eboard-card {
+        text-align: center;
+        background-color: var(--Light-Gray); /* Card Background */
+        padding: 20px;
+        border-radius: var(--radius-12);
+        box-shadow: var(--shadow-2);
+        transition: var(--transition);
     }
-    @keyframes scale-down {
-      0% {
-        scale: 5;
-      }
+
+    .eboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-3);
     }
-    @keyframes unclip {
-      to { clip-path: ellipse(220% 200% at 50% 175%); }
+
+    .eboard-card img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius-6);
+        margin-bottom: 15px;
     }
-    @keyframes fade-out {
-      to { opacity: 0; }
+
+    .eboard-card .card-title {
+        font-size: var(--fs-4);
+        color: var(--Dark-Blue);
+        margin-bottom: 5px;
     }
-    @keyframes scale-and-move {
-      to {
-        translate: 0 -10%;
-        scale: 0.35 0.5;
-      }
+
+    .eboard-card .card-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: auto;
     }
-  }
-}
+
+    .eboard-card .card-icon a{
+        color: var(--Dark-Blue);
+        font-size: var(--fs-4);
+        transition: var(--transition);
+    }
+
+    .eboard-card .card-icon a:hover {
+        color: var(--Gold);
+    }
+
+    /* ============ Footer ============ */
+    
+    .footer.footer-gsu {
+        background-color: var(--Dark-Blue);
+        color: var(--White);
+        padding-block: 60px;
+        width: 100%;
+        position: relative;
+    }
+    
+    .footer.footer-gsu .logo.footer-gsu-logo {
+        font-weight: var(--fw-500);
+        margin-block-end: 25px;
+    }
+    
+    .footer.footer-gsu .footer-text.footer-gsu-text {
+        line-height: 1.6;
+    }
+    
+    .footer.footer-gsu .footer-top.footer-gsu-top .container {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+    }
+    
+    .footer.footer-gsu .footer-list-title.footer-gsu-list-title {
+        color: var(--Gold);
+        font-weight: var(--fw-600);
+        letter-spacing: 1px;
+        margin-block-end: 25px;
+    }
+    
+    .footer.footer-gsu .footer-list-title.footer-gsu-list-title:not(:last-child) {
+        margin-block-end: 15px;
+    }
+    
+    .footer.footer-gsu .footer-link.footer-gsu-link {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: var(--transition);
+    }
+    
+    .footer.footer-gsu .footer-link.footer-gsu-link ion-icon {
+        font-size: 14px;
+    }
+    
+    .footer.footer-gsu .footer-link.footer-gsu-link:is(:hover, :focus) {
+        opacity: 0.8px;
+    }
+    
+    .footer.footer-gsu .footer-item.footer-gsu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .footer.footer-gsu .footer-item.footer-gsu-item:nth-child(2) {
+        align-items: flex-start;
+    }
+    
+    
+    .footer.footer-gsu .footer-list.footer-gsu-list .footer-item.footer-gsu-item:not(:last-child) {
+        margin-block-end: 25px;
+    }
+      
+    .footer.footer-gsu .address.footer-gsu-address {
+        line-height: 1.5;
+    }
+      
+    .footer.footer-gsu .address-link.footer-gsu-link {
+        color: var(--Light-Gray); 
+        margin-block-start: 10px;
+        transition: var(--transition);
+    }
+      
+    .footer.footer-gsu .address-link.footer-gsu-link:is(:hover, :focus) {
+        opacity: 0.8;
+    }
+      
+    .footer.footer-gsu .footer-bottom.footer-gsu-bottom {
+        border-block-start: 1px solid var(--carcoal_20);
+        padding-block: 30px;
+        text-align: center;
+    }
+      
+    .footer.footer-gsu .copyright.footer-gsu-copyright {
+        line-height: 1.6;
+        margin-block-end: 30px;
+    }
+      
+    .footer.footer-gsu .copyright-link.footer-gsu-link {
+        display: inline-block;
+    }
